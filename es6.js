@@ -42,15 +42,16 @@ define(['babel', 'module'], function(babel, _module) {
                 fileExtension = pluginOptions.fileExtension || '.js',
                 url = req.toUrl(name + fileExtension);
 
-            var defaults = {
-                sourceMaps: config.isBuild ? false : 'inline',
-                sourceFileName: name
-            };
-            for (var key in defaults) {
-                babelOptions[key] = defaults[key];
-            }
-
+ 
             fetchText(url, function(text) {
+                var defaults = {
+                    sourceMaps: config.isBuild ? false : 'inline',
+                    sourceFileName: name + fileExtension
+                };
+                for (var key in defaults) {
+                    babelOptions[key] = defaults[key];
+                }
+
                 try {
                     var code = babel.transform(text, babelOptions).code;
                 } catch (err) {
